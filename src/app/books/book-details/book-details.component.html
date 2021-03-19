@@ -1,0 +1,10 @@
+<ng-container *ngIf="book$ | async as book">
+    <h2>{{book.title}}</h2>
+    <p>{{book.description}}</p>
+    <button (click)="changeZuEdit()" class="btn btn-danger">bearbeiten</button>
+</ng-container>
+<hr>
+
+
+<a routerLink="/books">Zum Dashboard</a><br>
+<a routerLink="/books/9783864906466">Angular Buch</a>

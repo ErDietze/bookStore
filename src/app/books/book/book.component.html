@@ -1,0 +1,24 @@
+<div class="card mb-4" *ngIf="book">
+    <div class="card-body bg-light">
+        <img class="img-thumbnail float-right" src="//api.angular.schule/avatar/{{ book.rating }}" />
+        <div class="card-title">
+            <h2>
+                {{ book.title }}
+                <span class="badge badge-secondary">{{ book.rating }}</span>
+            </h2>
+            <p>
+                <strong>Preis:</strong>
+                {{ book.price | currency:'EUR'}}
+            </p>
+        </div>
+        <p>{{ book.description }}</p>
+        <br-ratingstar [stars]="book.rating"></br-ratingstar>
+        <div>
+            <button class="btn btn-success mr-2" (click)="doRateUp()"> + </button>
+            <button class="btn btn-danger mr-2" (click)="doRateDown()"> - </button>
+            <button class="btn btn-danger mr-4"(click)="doDelete()">Löschen</button>
+
+            <a [routerLink]="['/books', book.isbn]">Details</a>
+        </div>
+    </div>
+</div>

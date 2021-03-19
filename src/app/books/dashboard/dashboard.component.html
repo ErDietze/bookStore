@@ -1,0 +1,8 @@
+<ng-container *ngIf="books">
+    <br-book [book]="b" *ngFor="let b of books" (rateUp)="doRateUp($event)" (rateDown)="doRateDown($event)" (deleteBook)="doDelete($event)">
+    </br-book>
+    <div><strong>Anzahl der Bücher </strong>= {{books.length}}<button class="btn btn-danger mr-4" (click)="doReset()">Zurücksetzen</button></div>
+    <div><strong>Datum: </strong>{{ dateObj | date: 'dd MMMM yyyy' }}</div>
+    <div><strong>Aktuelle Zeit: </strong>{{ currentTime | date:'HH:mm:ss'}}</div>
+    <!-- <div>{{books | json}}</div> -->
+</ng-container>

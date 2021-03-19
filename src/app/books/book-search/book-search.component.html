@@ -1,0 +1,12 @@
+<div class="form-group">
+    <input type="text" class="form-control" [formControl]="searchFormControl">
+    <ng-container *ngIf="books$ | async as books">
+        <ng-container *ngIf="books.length < 1"> keine Ergebnisse gefunden</ng-container>
+        <li *ngFor="let b of books">
+            {{b.isbn}}<br>
+            {{b.title}}<br>
+            {{b.description}}<br>
+        </li>
+    </ng-container>
+
+</div>
