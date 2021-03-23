@@ -15,6 +15,21 @@ export const loadBooksFailure = createAction(
   props<{ error: any }>()
 );
 
+export const loadSingleBook = createAction(
+  '[Book] Load a single Book',
+  props<{ isbn: string}>()
+);
+
+export const loadSingleBookSuccess = createAction(
+  '[Book] Load a single Book Success',
+  props<{ data: Book }>()
+);
+
+export const loadSingleBookFailure = createAction(
+  '[Book] Load a single Book Failure',
+  props<{ error: any }>()
+);
+
 export const createBook = createAction(
   '[Book] Create Book',
   props<{ book: Book }>()

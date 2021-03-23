@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { config, of } from 'rxjs';
-import { catchError, concatMap, map } from 'rxjs/operators';
+import { catchError, concatMap, map, switchMap } from 'rxjs/operators';
 import { Book } from '../shared/book';
 import { BookStoreService } from '../shared/book-store.service';
 import * as BookActions from './book.actions';
@@ -18,6 +18,16 @@ export class BookEffects {
           map(data => BookActions.loadBooksSuccess({ data })),
           catchError(error => of(BookActions.loadBooksFailure({ error }))))
       )
+    );
+  });
+
+  loadSingleBook$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(BookActions.loadSingleBook),
+      switchMap(action => this.bs.getSingleBook(action.isbn).pipe(
+        map(data => BookActions.loadSingleBookSuccess({ data })),
+        catchError(error => of(BookActions.loadSingleBookFailure({ error })))
+      ))
     );
   });
 

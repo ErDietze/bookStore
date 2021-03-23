@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Book } from '../shared/book';
 import * as BookActions from './book.actions';
 
@@ -8,16 +8,16 @@ export interface State {
 
   books: Book[];
   loading: boolean;
-  bookToCreate: Book;
-  isbnToDelete: string;
+  book: Book;
+  isbn: string;
 
 }
 
 export const initialState: State = {
   books: [],
   loading: false,
-  bookToCreate: { isbn: '', description: '', price: 0, rating: 0, title: '' },
-  isbnToDelete: ''
+  book: { isbn: '', description: '', price: 0, rating: 0, title: '' },
+  isbn: ''
 };
 
 
@@ -40,18 +40,38 @@ export const reducer = createReducer(
       loading: false
     };
   }),
+  on(BookActions.loadSingleBook, (state, action) => {
+    return {
+      ...state,
+      isbn: action.isbn,
+      loading: true
+    };
+  }),
+  on(BookActions.loadSingleBookSuccess, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+      book: action.data
+    };
+  }),
+  on(BookActions.loadSingleBookFailure, (state, action) => {
+    return {
+      ...state,
+      loading: false
+    };
+  }),
   on(BookActions.createBook, (state, action: { book }) => {
     return {
       ...state,
       loading: true,
-      bookToCreate: action.book
+      book: action.book
     };
   }),
   on(BookActions.createBookSuccess, (state, action: { book }) => {
     return {
       ...state,
       loading: false,
-      bookToCreate: action.book
+      book: action.book
     };
   }),
   on(BookActions.createBookFailure, (state, action) => {
@@ -64,7 +84,7 @@ export const reducer = createReducer(
     return {
       ...state,
       loading: true,
-      isbnToDelete: action.isbn
+      isbn: action.isbn
     };
   }),
   on(BookActions.deleteBookSuccess, (state, action) => {
@@ -83,19 +103,19 @@ export const reducer = createReducer(
     return {
       ...state,
       loading: true
-    }
+    };
   }),
   on(BookActions.deleteAllBooksSuccess, (state, action) => {
     return {
       ...state,
       loading: false
-    }
+    };
   }),
   on(BookActions.deleteAllBooksFailure, (state, action) => {
     return {
       ...state,
       loading: false
-    }
+    };
   })
 
 );
